@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     
-    $stmt = $pdo->prepare("UPDATE users SET is_login = 0 WHERE id = ?");
+    $stmt = $pdo->prepare("UPDATE users SET islogin = 0 WHERE id = ?");
     if ($stmt->execute([$userId])) {
         echo json_encode(['success' => true, 'message' => 'Logout successful']);
     } else {

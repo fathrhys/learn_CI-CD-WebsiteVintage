@@ -1,0 +1,8 @@
+/Frontend/node_modules/
+/Frontend/dist/
+/Frontend/.env
+/Backend/.env
+/Backend/uploads/users/*
+!/Backend/uploads/users/.gitkeep
+*.log
+/.vscode/
