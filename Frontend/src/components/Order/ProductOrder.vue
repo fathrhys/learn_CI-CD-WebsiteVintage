@@ -65,7 +65,7 @@
         <div class="d-flex align-items-center">
           <div class="me-3">
               <img 
-                src="@/assets/visa2.png" 
+                src="@/assets/Visa2.png" 
                 alt="VISA" 
                 style="width: 75px; height: auto;"
               >
