@@ -17,12 +17,13 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import ProductCard from '@/components/Card/ProductCard.vue'
+import { BASE_URL } from '@/api'
 
 const products = ref([])
 
 const fetchProducts = async () => {
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/get_products.php?type=all')
+    const response = await fetch(`${BASE_URL}/get_products.php?type=all`)
     const data = await response.json()
     if (data.success) {
       products.value = data.data

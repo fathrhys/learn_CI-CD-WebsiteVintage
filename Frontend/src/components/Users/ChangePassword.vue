@@ -60,8 +60,9 @@ import { reactive } from 'vue'
 // Import komponen BaseInput dan BaseButton
 import BaseButton from '@/components/ui/BaseButton.vue' // Sesuaikan path jika berbeda
 import BaseInput from '@/components/ui/BaseInput.vue'   // Sesuaikan path jika berbeda
+import { BASE_URL } from '@/api'
 
-const API_URL = 'http://localhost/FinalTest/Backend/change_password.php'
+const API_URL = `${BASE_URL}/change_password.php`
 
 const form = reactive({
   current: '',

@@ -34,6 +34,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
+import { BASE_URL } from '@/api'
 import { useAuth } from '@/stores/auth'
 import { useRouter } from 'vue-router'
 
@@ -66,7 +67,7 @@ onMounted(() => {
 
 const checkLikeStatus = async () => {
   try {
-    const response = await fetch(`http://localhost/FinalTest/Backend/check_like.php?user_id=${user.value.id}&product_id=${props.product.id}`)
+    const response = await fetch(`${BASE_URL}/check_like.php?user_id=${user.value.id}&product_id=${props.product.id}`)
     const data = await response.json()
     if (data.success) {
       isLiked.value = data.liked
@@ -86,7 +87,7 @@ const toggleLike = async (event) => {
   }
 
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/toggle_like.php', {
+    const response = await fetch(`${BASE_URL}/toggle_like.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

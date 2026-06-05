@@ -129,11 +129,11 @@
 import { ref, onMounted } from 'vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import ProductCard from '@/components/Card/ProductCard.vue'
+import { BASE_URL } from '@/api'
 
 const popularItems = ref([])
 const newProducts = ref([])
 const brands = ref([])
-const BASE_URL = 'http://localhost/FinalTest/Backend'
 
 onMounted(() => {
   document.title = 'Discover Your Timeless Style'

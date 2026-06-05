@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import { BASE_URL } from '@/api'
 
 const favoriteCount = ref(0)
 
@@ -11,7 +12,7 @@ export function useFavorite() {
         return
       }
       
-      const response = await fetch(`http://localhost/FinalTest/Backend/get_likes.php?user_id=${user.id}`)
+      const response = await fetch(`${BASE_URL}/get_likes.php?user_id=${user.id}`)
       const data = await response.json()
       
       if (data.success) {

@@ -159,6 +159,7 @@ import { useAuth } from '@/stores/auth'
 import ProductCard from '@/components/Card/ProductCard.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import SuccessCart from '@/components/SuccessModal/SuccessCart.vue'
+import { BASE_URL } from '@/api'
 
 const route = useRoute()
 const router = useRouter()
@@ -182,7 +183,7 @@ watch(() => route.params.id, (newId) => {
 const fetchProductDetail = async () => {
   try {
     const productId = route.params.id
-    const response = await fetch(`http://localhost/FinalTest/Backend/get_product_detail.php?id=${productId}`)
+    const response = await fetch(`${BASE_URL}/get_product_detail.php?id=${productId}`)
     const data = await response.json()
     if (data.success) {
       product.value = data.data
@@ -199,7 +200,7 @@ const fetchProductDetail = async () => {
 
 const checkLikeStatus = async () => {
   try {
-    const response = await fetch(`http://localhost/FinalTest/Backend/check_like.php?user_id=${user.value.id}&product_id=${product.value.id}`)
+    const response = await fetch(`${BASE_URL}/check_like.php?user_id=${user.value.id}&product_id=${product.value.id}`)
     const data = await response.json()
     if (data.success) {
       isLiked.value = data.liked
@@ -211,7 +212,7 @@ const checkLikeStatus = async () => {
 
 const fetchOtherProducts = async () => {
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/get_products.php')
+    const response = await fetch(`${BASE_URL}/get_products.php`)
     const data = await response.json()
     if (data.success) {
       otherProducts.value = data.data
@@ -236,7 +237,7 @@ const toggleLike = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/toggle_like.php', {
+    const response = await fetch(`${BASE_URL}/toggle_like.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -264,7 +265,7 @@ const handleBuyNow = async () => {
   }
   
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/create_new_order.php', {
+    const response = await fetch(`${BASE_URL}/create_new_order.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -305,7 +306,7 @@ const handleAddToCart = async () => {
   }
 
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/add_to_cart.php', {
+    const response = await fetch(`${BASE_URL}/add_to_cart.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

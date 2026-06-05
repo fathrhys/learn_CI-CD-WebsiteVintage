@@ -53,6 +53,7 @@
 import { ref, computed, onMounted } from 'vue';
 import ProductCard from '../Card/ProductCard.vue';
 import EmptyFavorite from '../Empty/EmptyFavorite.vue';
+import { BASE_URL } from '@/api'
 
 // 1. State
 const favoriteItems = ref([]);
@@ -77,7 +78,7 @@ const itemCount = computed(() => favoriteItems.value.length);
 const loadUserFavorites = async () => {
   try {
     isLoading.value = true;
-    const response = await fetch(`http://localhost/FinalTest/Backend/get_likes.php?user_id=${currentUserId}`);
+    const response = await fetch(`${BASE_URL}/get_likes.php?user_id=${currentUserId}`);
     const result = await response.json();
 
     if (result.success) {
@@ -112,7 +113,7 @@ const handleToggleLike = async (productId) => {
 
   // Sync ke Backend
   try {
-    await fetch('http://localhost/FinalTest/Backend/toggle_like.php', {
+    await fetch(`${BASE_URL}/toggle_like.php`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 

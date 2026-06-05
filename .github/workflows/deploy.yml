@@ -32,21 +32,17 @@ jobs:
 
       - name: 🚀 Deploy Frontend ke direktori Nginx
         run: |
-          # Menyalin hasil build (folder dist) ke folder public server
-          sudo mkdir -p "$FRONTEND_DIR"
-          sudo rsync -av --delete Frontend/dist/ "$FRONTEND_DIR/"
+          mkdir -p "$FRONTEND_DIR"
+          rsync -av --delete Frontend/dist/ "$FRONTEND_DIR/"
 
       - name: ⚙️ Deploy Backend (PHP API) ke direktori server
         run: |
-          # Menyalin file PHP ke folder backend server tanpa menghapus .env dan upload user
-          sudo mkdir -p "$BACKEND_DIR/uploads/users"
-          sudo rsync -av --delete \
+          mkdir -p "$BACKEND_DIR/uploads/users"
+          rsync -av --delete \
             --exclude '.env' \
             --exclude 'uploads/users/' \
             Backend/ "$BACKEND_DIR/"
-
+            
       - name: 🔐 Menyesuaikan Hak Akses (Permissions)
         run: |
-          # Memastikan Nginx tetap memiliki hak untuk membaca file yang baru di-deploy
-          sudo chown -R nashwan-devops:www-data /var/www/vintage
-          sudo chmod -R 775 /var/www/vintage
+          chmod -R 775 /var/www/vintage

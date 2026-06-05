@@ -71,6 +71,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
+import { BASE_URL } from '@/api'
 
 const router = useRouter()
 const showPassword = ref(false)
@@ -86,7 +87,7 @@ const handleSubmit = async () => {
   }
   
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/login.php', {
+    const response = await fetch(`${BASE_URL}/login.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

@@ -106,10 +106,10 @@ import CartCard from '@/components/Card/CartCard.vue'
 import ProductCard from '@/components/Card/ProductCard.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import EmptyCart from '@/components/Empty/EmptyCart.vue'
+import { BASE_URL } from '@/api'
 
 const route = useRoute()
 const router = useRouter()
-const BASE_URL = 'http://localhost/FinalTest/Backend'
 
 const cartItems = ref([])
 

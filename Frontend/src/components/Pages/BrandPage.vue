@@ -22,6 +22,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import ProductCard from '@/components/Card/ProductCard.vue'
+import { BASE_URL } from '@/api'
 
 const route = useRoute()
 const products = ref([])
@@ -30,7 +31,7 @@ const brandName = ref('')
 const fetchProductsByBrand = async () => {
   try {
     const brandId = route.params.id
-    const response = await fetch(`http://localhost/FinalTest/Backend/get_products_by_brand.php?brand_id=${brandId}`)
+    const response = await fetch(`${BASE_URL}/get_products_by_brand.php?brand_id=${brandId}`)
     const data = await response.json()
     if (data.success) {
       products.value = data.data

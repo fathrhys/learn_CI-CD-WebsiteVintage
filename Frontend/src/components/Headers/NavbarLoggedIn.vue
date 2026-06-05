@@ -129,9 +129,9 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 import { useCart } from '@/stores/cart'
 import { useFavorite } from '@/stores/favorite'
 import { useAuth } from '@/stores/auth' // <-- Import useAuth
+import { BASE_URL } from '@/api'
 
-const API_BASE_URL = 'http://localhost/FinalTest/Backend/';
-const API_GET_USER = API_BASE_URL + 'get_user.php';
+const API_GET_USER = `${BASE_URL}/get_user.php`;
 
 const router = useRouter()
 const { cartCount, fetchCartCount } = useCart()
@@ -183,7 +183,7 @@ const fetchProfileImage = async (userId) => {
             localStorage.setItem('user', JSON.stringify(currentUser));
             userStorageData.value = currentUser; // Update ref
 
-            userImage.value = API_BASE_URL + imagePath; 
+            userImage.value = `${BASE_URL}/${imagePath}`; 
         } else {
             userImage.value = null;
         }
@@ -208,7 +208,7 @@ const loadUserFromStorage = () => {
         if (imagePath.startsWith('/')) {
              imagePath = imagePath.substring(1);
         }
-        userImage.value = API_BASE_URL + imagePath;
+        userImage.value = `${BASE_URL}/${imagePath}`;
     } else {
         // Jika tidak ada image di store, panggil fetchProfileImage
         fetchProfileImage(userId);
@@ -266,7 +266,7 @@ const handleLogout = async () => {
   const userToLogout = user.value // Ambil user dari store
   
   try {
-    await fetch('http://localhost/FinalTest/Backend/logout.php', {
+    await fetch(`${BASE_URL}/logout.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

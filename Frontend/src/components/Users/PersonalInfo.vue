@@ -132,12 +132,13 @@ import { reactive, onMounted, ref, computed, watch, nextTick } from 'vue'
 import BaseButton from '@/components/ui/BaseButton.vue' 
 import BaseInput from '@/components/ui/BaseInput.vue'   
 import { useAuth } from '@/stores/auth' 
+import { BASE_URL } from '@/api'
 
 const { user, checkAuth } = useAuth(); 
 
-const API_GET_URL = 'http://localhost/FinalTest/Backend/get_user.php'; 
-const API_UPDATE_URL = 'http://localhost/FinalTest/Backend/update_user.php'; 
-const API_DELETE_IMAGE = 'http://localhost/FinalTest/Backend/remove_image.php'; 
+const API_GET_URL = `${BASE_URL}/get_user.php`; 
+const API_UPDATE_URL = `${BASE_URL}/update_user.php`; 
+const API_DELETE_IMAGE = `${BASE_URL}/remove_image.php`; 
 
 const currentUserId = computed(() => {
     return user.value ? user.value.id : localStorage.getItem('id') || null; 
@@ -211,7 +212,7 @@ const fetchUserData = async (userId) => {
             }
             
             if (data.data.image && data.data.image !== "") {
-              userImage.value = 'http://localhost/FinalTest/Backend/' + data.data.image; 
+              userImage.value = `${BASE_URL}/${data.data.image}`; 
               console.log('User Image URL:', userImage.value);
             } else {
               userImage.value = null; 
@@ -358,7 +359,7 @@ const handleUpdateProfile = async () => {
                 window.dispatchEvent(new Event('profileUpdated'));
 
                 if (result.imagePath) {
-                    userImage.value = 'http://localhost/FinalTest/Backend/' + result.imagePath;
+                  userImage.value = `${BASE_URL}/${result.imagePath}`;
                 }
             }
         } else {

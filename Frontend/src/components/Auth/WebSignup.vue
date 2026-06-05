@@ -164,6 +164,7 @@ import { useRouter } from 'vue-router'
 import SuccessRegister from '../SuccessModal/SuccessRegister.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
+import { BASE_URL } from '@/api'
 
 const router = useRouter()
 const showPassword = ref(false)
@@ -192,7 +193,7 @@ const handleSubmit = async () => {
   isLoading.value = true // Mulai Loading
   
   try {
-    const response = await fetch('http://localhost/FinalTest/Backend/register.php', {
+    const response = await fetch(`${BASE_URL}/register.php`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

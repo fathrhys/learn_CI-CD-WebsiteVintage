@@ -71,11 +71,11 @@ import OrderItems from '../Order/OrderItems.vue'
 import ProductOrder from '../Order/ProductOrder.vue'
 import BaseButton from '../ui/BaseButton.vue'
 import SuccessOrder from '../SuccessModal/SuccessOrder.vue' // Menggunakan nama yang benar
+import { BASE_URL } from '@/api'
 
 const route = useRoute()
 const router = useRouter()
-const BASE_URL = 'http://localhost/FinalTest/Backend' 
-const IMAGE_BASE_URL = 'http://localhost/FinalTest/Backend/'
+const IMAGE_BASE_URL = `${BASE_URL}/`
 
 const loading = ref(true)
 const orderItems = ref([])

@@ -53,6 +53,7 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ProductCard from '@/components/Card/ProductCard.vue'
 import EmptySearch from '../Empty/EmptySearch.vue'
+import { BASE_URL } from '@/api'
 
 const route = useRoute()
 const router = useRouter()
@@ -68,7 +69,7 @@ const searchProducts = async (query) => {
   
   loading.value = true
   try {
-    const response = await fetch(`http://localhost/FinalTest/Backend/search_products.php?q=${encodeURIComponent(query)}`)
+    const response = await fetch(`${BASE_URL}/search_products.php?q=${encodeURIComponent(query)}`)
     const data = await response.json()
     
     if (data.success) {
