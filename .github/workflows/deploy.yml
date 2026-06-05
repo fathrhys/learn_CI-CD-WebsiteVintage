@@ -1,62 +1,52 @@
-name: Deploy WebsiteVintage
+name: Deploy Vintage Website
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
-concurrency:
-  group: websitevintage-production
-  cancel-in-progress: true
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  FRONTEND_DIR: /var/www/vintage/public
+  BACKEND_DIR: /var/www/vintage/backend
 
 jobs:
   deploy:
-    runs-on: [self-hosted, ubuntu, vintage]
-
-    env:
-      DEPLOY_ROOT: /var/www/vintage
-      FRONTEND_DIR: /var/www/vintage/public
-      BACKEND_DIR: /var/www/vintage/backend
-      VITE_API_URL: /api
+    runs-on: self-hosted
 
     steps:
-      - name: Checkout source
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: Frontend/package-lock.json
-
-      - name: Install frontend dependencies
-        working-directory: Frontend
-        run: npm ci
-
-      - name: Build frontend
-        working-directory: Frontend
-        run: npm run build
-
-      - name: Prepare deployment folders
+      - name: 📦 Install & Build Frontend (Vue 3 + Vite)
         run: |
-          mkdir -p "$DEPLOY_ROOT"
-          mkdir -p "$FRONTEND_DIR"
-          mkdir -p "$BACKEND_DIR/uploads/users"
+          cd Frontend
+          npm ci
+          npm run build
 
-      - name: Deploy backend
+      - name: 🚀 Deploy Frontend ke direktori Nginx
         run: |
-          rsync -a --delete \
+          # Menyalin hasil build (folder dist) ke folder public server
+          sudo mkdir -p "$FRONTEND_DIR"
+          sudo rsync -av --delete Frontend/dist/ "$FRONTEND_DIR/"
+
+      - name: ⚙️ Deploy Backend (PHP API) ke direktori server
+        run: |
+          # Menyalin file PHP ke folder backend server tanpa menghapus .env dan upload user
+          sudo mkdir -p "$BACKEND_DIR/uploads/users"
+          sudo rsync -av --delete \
             --exclude '.env' \
-            --exclude 'uploads/' \
-            Backend/ "$BACKEND_DIR"/
+            --exclude 'uploads/users/' \
+            Backend/ "$BACKEND_DIR/"
 
-      - name: Deploy frontend
+      - name: 🔐 Menyesuaikan Hak Akses (Permissions)
         run: |
-          rsync -a --delete Frontend/dist/ "$FRONTEND_DIR"/
-
-      - name: Show deployment summary
-        run: |
-          echo "Frontend deployed to: $FRONTEND_DIR"
-          echo "Backend deployed to: $BACKEND_DIR"
+          # Memastikan Nginx tetap memiliki hak untuk membaca file yang baru di-deploy
+          sudo chown -R nashwan-devops:www-data /var/www/vintage
+          sudo chmod -R 775 /var/www/vintage
